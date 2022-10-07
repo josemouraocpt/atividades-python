@@ -63,7 +63,7 @@ def calcula_media_das_notas():
     return '''<h1> As notas {}, {} e {}, tem média de {}</h1>
     <h2> O resultado do aluno ficou como {}.</h2>'''.format(nota1, nota2, nota3, media, mensagem)
 
-# ttp://127.0.0.1:5000/formulario/1
+# http://127.0.0.1:5000/formulario/1
 @app.route('/formulario/1', methods=['GET', 'POST'])
 def teste_dados_formulario_html():
     #testa se o metodo é POST
@@ -83,6 +83,63 @@ def teste_dados_formulario_html():
         <input type="submit" value="Enviar">
     </form>
     '''
+
+# http://127.0.0.1:5000/formulario/2
+@app.route('/formulario/2', methods=['GET', 'POST'])
+def teste_dados_formulario_html_numeros():
+    #testa se o metodo é POST
+    if request.method == 'POST':    
+        num1 = float(request.form['num1'])
+        num2 = float(request.form['num2'])
+        num3 = float(request.form['num3'])
+        minimo = min([num1, num2, num3])
+        maximo = max([num1, num2, num3])
+        media = (num1 + num2 + num3) / 3
+        return '''<h1> Os numeros {}, {} e {} tem média {}</h1>
+                <h1>O menor valor foi {} e o maior foi {}</h1>'''.format(num1, num2, num3, media, minimo, maximo)
+    return '''
+    <form method="POST">
+        <div>
+            <label>Numero 1: <input type="number" name="num1"></label>
+        </div>
+        <div>
+            <label>Numero 2: <input type="number" name="num2"></label>
+        </div>
+        <div>
+            <label>Numero 3: <input type="number" name="num3"></label>
+        </div>
+        <input type="submit" value="Enviar">
+    </form>
+    '''
+
+# http://127.0.0.1:5000/formulario/3
+@app.route('/formulario/3', methods=['GET', 'POST'])
+def teste_dados_formulario_html_imc():
+    #testa se o metodo é POST
+    if request.method == 'POST':    
+        peso = float(request.form['peso'])
+        altura = float(request.form['altura'])
+        imc = peso / (altura ** 2)
+        if imc <= 18.5: mensagem = 'Abaixo do peso'
+        if imc >= 18.6 and imc <= 24.9: mensagem = 'Peso ideal (parabéns)'
+        if imc >= 25.0 and imc <= 29.9: mensagem = 'Levemente acima do peso'
+        if imc >= 30.0 and imc <= 34.9: mensagem = 'Obesidade grau I'
+        if imc >= 35.0 and imc <= 39.9: mensagem = 'Obesidade grau II (severa)'
+        if imc >= 40.0: mensagem = 'Obesidade grau III (mórbida)'
+        return '''<h1> O indivisuo possui {}Kg e mede {}m</h1>
+                <h1>O seu IMC foi de {} {}</h1>'''.format(peso, altura, imc, mensagem)
+    return '''
+    <form method="POST">
+        <div>
+            <label>Peso em Kg: <input type="text" name="peso"></label>
+        </div>
+        <div>
+            <label>Altura em m: <input type="text" name="altura"></label>
+        </div>
+        <input type="submit" value="Enviar">
+    </form>
+    '''
+
 
 if __name__ == "__main__":
     app.run ()
