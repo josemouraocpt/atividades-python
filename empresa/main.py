@@ -63,5 +63,26 @@ def calcula_media_das_notas():
     return '''<h1> As notas {}, {} e {}, tem média de {}</h1>
     <h2> O resultado do aluno ficou como {}.</h2>'''.format(nota1, nota2, nota3, media, mensagem)
 
+# ttp://127.0.0.1:5000/formulario/1
+@app.route('/formulario/1', methods=['GET', 'POST'])
+def teste_dados_formulario_html():
+    #testa se o metodo é POST
+    if request.method == 'POST':    
+        lang = request.form['linguagem']
+        frame = request.form['framework']
+        return '''<h1> Linguagem informada {}</h1>
+                <h1> Framework informado {}</h1>'''.format(lang, frame)
+    return '''
+    <form method="POST">
+        <div>
+            <label>Linguagem: <input type="text" name="linguagem"></label>
+        </div>
+        <div>
+            <label>Framework: <input type="text" name="framework"></label>
+        </div>
+        <input type="submit" value="Enviar">
+    </form>
+    '''
+
 if __name__ == "__main__":
     app.run ()
