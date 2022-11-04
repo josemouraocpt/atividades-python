@@ -31,7 +31,7 @@ def aborta_se_o_funcionario_nao_existe(cpf):
         if funcionario['cpf'] == int(cpf):
             encontrei = True
             if encontrei == False:
-                abort(404, mensagem="O funcionario com cpf = {} não existe".format(id)) #404:Not Found
+                abort(404, mensagem="O funcionario com cpf = {} não existe".format(cpf)) #404:Not Found
 
 
 campos_obrigatorios_para_atualizacao = api.model('Atualizaçao de hora do funcionario', {
